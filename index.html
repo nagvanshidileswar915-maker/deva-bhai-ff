@@ -1,0 +1,213 @@
+
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>DEVA BHAI - FF Nickname</title>
+<style>
+*{box-sizing:border-box}
+body{
+ margin:0;background:#080817;color:white;
+ font-family:Arial,sans-serif;
+}
+header{
+ text-align:center;padding:30px 12px;
+ background:linear-gradient(135deg,#160b35,#102a57,#080817);
+ border-bottom:1px solid #604cff;
+}
+.logo{
+ font-size:38px;font-weight:900;
+ color:#b99aff;
+ text-shadow:0 0 12px #8b5cff,0 0 28px #347bff;
+}
+header p{color:#b9b8ff}
+.avatar{
+ margin:20px auto;width:95px;height:95px;
+ border-radius:50%;display:grid;place-items:center;
+ font-size:45px;
+ background:linear-gradient(135deg,#7c3aed,#168cff);
+ box-shadow:0 0 25px #6555ff;
+ border:3px solid #b9a0ff;
+}
+.youtube{
+ display:inline-block;text-decoration:none;
+ background:#e62143;color:white;
+ padding:12px 20px;border-radius:25px;
+ font-weight:bold;margin-top:12px;
+}
+.container{max-width:700px;margin:auto;padding:18px}
+h2{text-align:center;color:#a78bfa}
+input{
+ width:100%;padding:16px;border-radius:12px;
+ border:1px solid #7255ff;background:#15152a;
+ color:white;font-size:18px;outline:none;
+}
+input:focus{box-shadow:0 0 15px #6555ff}
+.info{text-align:center;color:#aaa;font-size:14px}
+#count{text-align:center;color:#80baff;margin:15px}
+.name{
+ display:flex;justify-content:space-between;
+ align-items:center;gap:10px;
+ background:#15152b;border:1px solid #35316c;
+ padding:13px;margin:10px 0;border-radius:12px;
+}
+.nickname{overflow-wrap:anywhere;font-size:16px}
+button{
+ border:0;border-radius:8px;padding:10px 13px;
+ background:linear-gradient(120deg,#803bff,#168cff);
+ color:white;font-weight:bold;
+}
+#more{display:block;margin:20px auto;padding:14px 25px}
+footer{text-align:center;color:#888;padding:25px}
+</style>
+</head>
+<body>
+
+<header>
+ <div class="logo">⚡ DEVA BHAI ⚡</div>
+ <div class="avatar">👑</div>
+ <h2>FF NICKNAME GENERATOR</h2>
+ <p>CREATE YOUR UNIQUE GAMING ID</p>
+ <a class="youtube"
+ href="https://youtube.com/@realdarkmindx"
+ target="_blank">▶ SUBSCRIBE ON YOUTUBE</a>
+</header>
+
+<div class="container">
+ <h2>🔥 Create Your Nickname</h2>
+ <input id="username" placeholder="अपना नाम लिखें / Enter Name">
+ <p class="info">नाम लिखते ही Stylish Nicknames बनेंगे</p>
+ <div id="count">Enter your name to start</div>
+ <div id="results"></div>
+ <button id="more" onclick="showMore()" hidden>
+ LOAD MORE
+ </button>
+</div>
+
+<footer>
+ <div class="logo">DEVA BHAI</div>
+ <p>Made with ❤️ for Gamers</p>
+ <p>© 2026 DEVA FF NICKNAME</p>
+</footer>
+
+<script>
+const prefixes=[
+"꧁༺","꧁ঔৣ","『","【","亗","乂","★彡",
+"༒","♛","♕","么","ツ","◥","◤","彡",
+"⚡","✿","✧","✦","♚","♜","☯","๛",
+"〆","۝","࿐","᭄","◉","◆","◇",
+"༺","⫷","⟪","『★","꧁★","★","✪",
+"☠","♠","♤","✰","✵","⛧","♨"
+];
+
+const suffixes=[
+"༻꧂","ঔৣ꧂","』","】","亗","乂","彡★",
+"༒","♛","♕","么","ツ","◢","◣","彡",
+"⚡","✿","✧","✦","♚","♜","☯","๛",
+"〆","۝","࿐","᭄","◉","◆","◇",
+"༒","༺","⫸","⟫","★』","★꧂",
+"★","✪","☠","♠","♤","✰","✵","⛧","♨"
+];
+
+let allNames=[];
+let visible=0;
+const limit=60;
+
+const input=document.getElementById("username");
+const results=document.getElementById("results");
+const count=document.getElementById("count");
+const more=document.getElementById("more");
+
+function generate(){
+ const name=input.value.trim();
+ allNames=[];
+ visible=0;
+ results.innerHTML="";
+
+ if(!name){
+  count.textContent="अपना नाम लिखें";
+  more.hidden=true;
+  return;
+ }
+
+ const set=new Set();
+
+ prefixes.forEach(p=>{
+  suffixes.forEach(s=>{
+   set.add(p+name+s);
+  });
+ });
+
+ [
+ n=>"꧁༺"+n+"༻꧂",
+ n=>"亗"+n+"亗",
+ n=>"『"+n+"』",
+ n=>"乂"+n+"乂",
+ n=>"★彡"+n+"彡★",
+ n=>"༒"+n+"༒",
+ n=>"♛"+n+"♛",
+ n=>"么"+n+"么",
+ n=>"ツ"+n+"ツ",
+ n=>"⚡"+n+"⚡",
+ n=>"꧁"+n+"꧂",
+ n=>"๛"+n+"๛",
+ n=>"〆"+n+"〆",
+ n=>"࿐"+n+"࿐",
+ n=>"♚"+n+"♚",
+ n=>"☯"+n+"☯",
+ n=>"『★"+n+"★』",
+ n=>"༺"+n+"༻",
+ n=>"✿"+n+"✿",
+ n=>"♠"+n+"♠"
+ ].forEach(fn=>set.add(fn(name)));
+
+ allNames=[...set];
+ count.textContent=allNames.length+" Nicknames Generated!";
+ showMore();
+}
+
+function showMore(){
+ const end=Math.min(visible+limit,allNames.length);
+
+ for(let i=visible;i<end;i++){
+  const item=document.createElement("div");
+  item.className="name";
+
+  const text=document.createElement("span");
+  text.className="nickname";
+  text.textContent=allNames[i];
+
+  const btn=document.createElement("button");
+  btn.textContent="COPY";
+  btn.onclick=()=>copyName(allNames[i],btn);
+
+  item.append(text,btn);
+  results.appendChild(item);
+ }
+
+ visible=end;
+ more.hidden=visible>=allNames.length;
+}
+
+async function copyName(name,btn){
+ try{
+  await navigator.clipboard.writeText(name);
+  btn.textContent="COPIED ✓";
+ }catch(e){
+  const area=document.createElement("textarea");
+  area.value=name;
+  document.body.appendChild(area);
+  area.select();
+  document.execCommand("copy");
+  area.remove();
+  btn.textContent="COPIED ✓";
+ }
+ setTimeout(()=>btn.textContent="COPY",1500);
+}
+
+input.addEventListener("input",generate);
+</script>
+</body>
+</html>
+
