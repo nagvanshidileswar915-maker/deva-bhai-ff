@@ -211,6 +211,86 @@ input.addEventListener("input",generate);
  <a href="contact.html">Contact Us</a>
  <a href="privacy.html">Privacy Policy</a>
  <a href="terms.html">Terms & Conditions</a>
+ 
+<h2>🔥 1000+ Stylish Unicode Symbols</h2>
+
+<input id="symbolSearch" type="text"
+placeholder="Search symbols..."
+style="width:90%;padding:12px;margin:10px 0;border-radius:8px;">
+
+<button onclick="copyAllSymbols()">📋 Copy All</button>
+
+<p id="symbolCount"></p>
+<div id="symbolBox" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(75px,1fr));gap:8px;"></div>
+
+<script>
+const ranges = [
+ [0x2190,0x21FF],
+ [0x2300,0x23FF],
+ [0x2460,0x24FF],
+ [0x2500,0x25FF],
+ [0x2600,0x26FF],
+ [0x2700,0x27BF],
+ [0x2900,0x297F],
+ [0x2B00,0x2BFF],
+ [0x1F300,0x1F5FF]
+];
+
+let allSymbols = [];
+
+ranges.forEach(([start,end]) => {
+ for(let i=start;i<=end;i++){
+  allSymbols.push(String.fromCodePoint(i));
+ }
+});
+
+const box = document.getElementById("symbolBox");
+const search = document.getElementById("symbolSearch");
+
+function showSymbols(list){
+ box.innerHTML = "";
+ document.getElementById("symbolCount").textContent =
+ list.length + " Symbols";
+
+ list.forEach(symbol => {
+  const btn = document.createElement("button");
+  btn.textContent = symbol + " Copy";
+  btn.style.padding = "10px";
+  btn.style.borderRadius = "8px";
+  btn.style.border = "1px solid #8b5cf6";
+  btn.style.background = "#171b35";
+  btn.style.color = "white";
+  btn.style.fontSize = "16px";
+
+  btn.onclick = async () => {
+   try {
+    await navigator.clipboard.writeText(symbol);
+    btn.textContent = "Copied ✓";
+   } catch(e) {
+    btn.textContent = "Copy failed";
+   }
+  };
+
+  box.appendChild(btn);
+ });
+}
+
+search.addEventListener("input", () => {
+ const q = search.value.toLowerCase();
+ showSymbols(allSymbols.filter(s => s.toLowerCase().includes(q)));
+});
+
+async function copyAllSymbols(){
+ try {
+  await navigator.clipboard.writeText(allSymbols.join(" "));
+  alert("Symbols copied!");
+ } catch(e) {
+  alert("Copy failed. Try using HTTPS.");
+ }
+}
+
+showSymbols(allSymbols);
+</script>
 </body>
 </html>
 
