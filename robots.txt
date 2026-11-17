@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://nagvanshidileshwar915-maker.github.io/deva-bhai-ff/sitemap.xml
